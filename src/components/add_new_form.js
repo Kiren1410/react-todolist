@@ -1,8 +1,29 @@
-export default function AddForm() {
+import { useState } from "react";
+
+
+
+export default function AddForm(props) {
+  const { todos, setTodos} = props;
+  const [value, setValue] = useState("");
     return (
       <div class="mt-4">
-      <form class="d-flex justify-content-between align-items-center">
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        setTodos([
+          ...todos,
+          {
+            id: Math.random(),
+            name: value,
+          }
+        ]);
+        setValue("");
+      }}
+      class="d-flex justify-content-between align-items-center">
         <input
+          value={value}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
           type="text"
           class="form-control"
           placeholder="Add new item..."
